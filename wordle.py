@@ -23,11 +23,11 @@ def guess(word_guess):
                 answer.append(0)
             else:
                 answer.append(-1)
-        answer.reverse()
+
         if (answer ==[1,1,1,1,1]):
             print("you won!")
             break
-
+       # answer.reverse()
 
         i += 1
         return answer
@@ -44,8 +44,7 @@ def match(word, pattern, wrong_pos,notatall):
     if wrong_pos:
         if any(word[pos] == c for (c, pos) in wrong_pos):
             return False
-        if all(word[pos] == c for (c, pos) in wrong_pos):
-            return False
+
 
 
     if any(c in word for c in notatall):
@@ -62,16 +61,17 @@ def list_matches(pattern, dictionary, wrong_pos,notattall):
 
 
 def guesser():
-    word_guess = "אלוהי"
     wrong_pos = []
-    notattall=[]
-    for i in range(5):
+    notattall = []
+    word_guess = "אלוהי"
 
+    for i in range(5):
+        pattern = []
 
         print(word_guess)
         guessans = (guess(word_guess))
         print(guessans)
-        pattern = []
+
         dictionary = contents.words
 
         for n in range(5):
@@ -82,7 +82,7 @@ def guesser():
             else:
                 notattall.append([*word_guess][n])
 
-        if(pattern!=[] or wrong_pos!=[]):
+        if(pattern!=[] or wrong_pos!=[] or notattall!=[]):
             words =list_matches(pattern, dictionary,wrong_pos,notattall)
         else:
             print("random")
@@ -91,7 +91,7 @@ def guesser():
             print("random")
             words=get_random_word.get_random()
         word_guess=words
-
+        print(pattern)
 
 
 if __name__ == "__main__":
