@@ -1,16 +1,21 @@
 import contents
 import get_random_word
+import words
 from get_random_word import get_random
 import re
 
-word = get_random_word.get_random()
-print(word)
+word = ""
 i = 0
-
+def start_game():
+    global i
+    global word
+    i=0
+    word=get_random_word.get_random()
+    print(word)
 
 def game_loop(word_guess):
-    global i
 
+    global i
     while i < 6:
         word_try = word_guess
         if len(word_try) != 5 or word_try not in contents.contents:
@@ -30,11 +35,12 @@ def game_loop(word_guess):
                 answer.append(-1)
         # if all letters are correct
         if answer == [1, 1, 1, 1, 1]:
+            print(word_guess)
             print("you won!")
             return answer
 
         i += 1
-    return answer
+        return answer
 
 
 def match(word, green_letters, yellow_letters, wrong_letters):
@@ -74,10 +80,13 @@ def list_matches(pattern, all_words, yellow_letters, wrong_letters):
     for word in all_words:
         if match(word, pattern, yellow_letters, wrong_letters):
             matches.append(word)
-            return matches[0]
+
+    best_words,best_score = words.best_words(matches,words.average_letter_position)
+    return best_words[0]
 
 
 def guesser():
+    start_game()
     yellow_letters = []
     wrong_letters = []
     word_guess = "אחיהן"
@@ -85,13 +94,18 @@ def guesser():
     for i in range(5):
         green_letter = []
 
-        print(word_guess)
+
         guess_results = game_loop(word_guess)
-        print(guess_results)
+        if i == 4:
+            print(guess_results)
+
 
         dictionary = contents.words
+        if guess_results == [1,1,1,1,1]:
+            return True
+
         if guess_results == None:
-            break
+            return
         for n in range(5):
             if guess_results[n] == 1:
                 green_letter.append(([*word_guess][n], n))
@@ -103,17 +117,26 @@ def guesser():
         if len(green_letter) > 0 or len(yellow_letters) > 0 or len(wrong_letters) > 0:
             words = list_matches(green_letter, dictionary, yellow_letters, wrong_letters)
         else:
-            print("random")
+
             words = get_random_word.get_random()
         if words == None:
-            print("random")
+
             words = get_random_word.get_random()
         # next word is cool
-        word_guess = words
-        print(green_letter)
-        print(wrong_letters)
-        print(yellow_letters)
 
+        word_guess = words
+        if i  ==4:
+            print(word_guess)
+
+    print("you lost")
+
+    return False
 
 if __name__ == "__main__":
-    guesser()
+   # guesser()
+    correct=0
+    for i in range(100):
+        if guesser():
+            correct+=1
+    print(correct/100)
+
