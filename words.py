@@ -1,5 +1,5 @@
-from main import get_random_word
-from main import contents
+from get_random_word import get_random
+from contents import contents
 
 # https://www.sttmedia.com/characterfrequency-hebrew
 def get_letter_percentage(letter):
@@ -178,7 +178,7 @@ def get_most_common_position():
     return average_letter_position
 
 
-def best_words(average_letter_position):
+def best_words(letter_list, average_letter_position):
     best_score = 100000
     # best_word = ''
     best_words = []
@@ -191,8 +191,8 @@ def best_words(average_letter_position):
             best_score = score
             best_words = [word]
             print(f"New best word: {word} with score {score}")
-        # elif abs(score - best_score) < 0.001:
-        #     best_words.append(word)
+        elif abs(score - best_score) < 0.001:
+            best_words.append(word)
 
     return best_words, best_score
 
@@ -200,6 +200,5 @@ def best_words(average_letter_position):
 average_letter_position = get_most_common_position()
 
 if __name__ == "__main__":
-    # print(get_word_score(get_random_word(), average_letter_position))
     print(get_most_common_position())
     print(best_words(average_letter_position))
