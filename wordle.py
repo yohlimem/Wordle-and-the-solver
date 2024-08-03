@@ -47,7 +47,8 @@ def match(word, pattern, wrong_pos,notatall):
 
         if all(word[pos] == c for (c, pos) in wrong_pos):
             return False
-
+        if any(c not in word for (c,pos) in wrong_pos):
+            return False
 
     if any(c in word for c in notatall):
         return False
