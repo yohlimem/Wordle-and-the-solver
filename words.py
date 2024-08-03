@@ -1,5 +1,5 @@
-from main import get_random_word
-from main import contents
+from get_random_word import get_random
+from get_random_word import contents
 
 # https://www.sttmedia.com/characterfrequency-hebrew
 def get_letter_percentage(letter):
