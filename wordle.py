@@ -76,7 +76,8 @@ def guesser():
         print(guessans)
 
         dictionary = contents.words
-
+        if(guessans==None):
+            break
         for n in range(5):
             if(guessans[n]==1):
                 pattern.append(([*word_guess][n],n))
