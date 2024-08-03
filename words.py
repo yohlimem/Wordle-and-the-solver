@@ -1,5 +1,5 @@
 from get_random_word import get_random
-from contents import contents
+from contents import words
 
 # https://www.sttmedia.com/characterfrequency-hebrew
 def get_letter_percentage(letter):
@@ -80,7 +80,7 @@ def get_letter_count_and_position(word):
 # we want the word with the most different letters
 
 
-def get_word_score(word, average_letter_position):
+def get_word_score(word, average_letter_position, guest_result=None):
     score = 0
 
     # more of the same letter is bad
@@ -94,23 +94,25 @@ def get_word_score(word, average_letter_position):
 
     letter_count = {k: (v / len(letter_count.items())) for k, v in letter_count.items()}
 
-    # print(letter_count)
+    # print(letter_positions)
 
     # find distance from the average position
 
-    score += sum([v * (get_letter_percentage(k) / 10.0) for k, v in letter_count.items()])
+    score += sum([v * (get_letter_percentage(k)) for k, v in letter_count.items()])
     # print(f"score after letter count: {score}")
     for k, v in letter_positions.items():
         average_position = average_letter_position[k]
         for pos in v:
-            # if abs(pos - average_position) > 0.000001:
-            score -= abs(pos - average_position) / 5.0 * score
-                
+            # if guest_result is not None:
+            #     if guest_result[pos] != 1:
+            #         score += abs(pos - average_position)
+            # else:
+            score += abs(pos - average_position)
+
     return score
 
 
 def get_most_common_position():
-    words = contents.split()
     letter_position = {
         "א": {"appeared": 0, "position": 0},
         "ב": {"appeared": 0, "position": 0},
@@ -193,13 +195,15 @@ def best_words(word_list, average_letter_position):
             # print(f"New best word: {word} with score {score}")
         elif abs(score - best_score) < 0.001:
             best_words.append(word)
+            # print(f"New best words: {best_words}")
 
     return best_words, best_score
 
 
 average_letter_position = get_most_common_position()
 
-# if __name__ == "__main__":
-#     print(get_word_score("דשנים", average_letter_position))
-#     print(get_most_common_position())
-#     print(best_words(average_letter_position))
+if __name__ == "__main__":
+    # print(get_word_score("דשנים", average_letter_position))
+    # print(get_most_common_position())
+    print(best_words(words, average_letter_position))
+    print(average_letter_position)
