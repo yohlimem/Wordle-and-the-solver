@@ -33,22 +33,38 @@ def guess(word_guess):
         return answer
 
 
-
-def match(word, pattern):
+def match(word, pattern, wrong_pos,notatall):
     if len(pattern) > len(word):
         return False
 
-    return all(word[pos] == c for (c, pos) in pattern)
+    if not all(word[pos] == c for (c, pos) in pattern):
+        return False
 
-def list_matches(pattern, dictionary):
+
+    if wrong_pos:
+        if any(word[pos] == c for (c, pos) in wrong_pos):
+            return False
+        if all(word[pos] == c for (c, pos) in wrong_pos):
+            return False
+
+
+    if any(c in word for c in notatall):
+        return False
+    return True
+
+
+def list_matches(pattern, dictionary, wrong_pos,notattall):
+    matches = []
     for word in dictionary:
-        if match(word, pattern):
-            return word
+        if match(word, pattern, wrong_pos,notattall):
+            matches.append(word)
+            return matches[0]
 
 
 def guesser():
-    word_guess = get_random()
-
+    word_guess = "אלוהי"
+    wrong_pos = []
+    notattall=[]
     for i in range(5):
 
 
@@ -61,12 +77,19 @@ def guesser():
         for n in range(5):
             if(guessans[n]==1):
                 pattern.append(([*word_guess][n],n))
+            elif(guessans[n]==0):
+                wrong_pos.append(([*word_guess][n],n))
+            else:
+                notattall.append([*word_guess][n])
 
-        if(pattern!=[]):
-            words =list_matches(pattern, dictionary)
+        if(pattern!=[] or wrong_pos!=[]):
+            words =list_matches(pattern, dictionary,wrong_pos,notattall)
         else:
+            print("random")
             words=get_random_word.get_random()
-
+        if(words==None):
+            print("random")
+            words=get_random_word.get_random()
         word_guess=words
 
 
