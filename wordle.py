@@ -11,6 +11,7 @@ def start_game():
     global word
     i=0
     word=get_random_word.get_random()
+   # word="הבחנה"
     print(word)
 
 def game_loop(word_guess):
@@ -97,11 +98,13 @@ def guesser():
 
         guess_results = game_loop(word_guess)
         if i == 4:
-            print(guess_results)
+            print(word_guess," guess")
+
 
 
         dictionary = contents.words
         if guess_results == [1,1,1,1,1]:
+            print(i+1)
             return True
 
         if guess_results == None:
@@ -125,18 +128,17 @@ def guesser():
         # next word is cool
 
         word_guess = words
-        if i  ==4:
-            print(word_guess)
+
 
     print("you lost")
 
     return False
 
 if __name__ == "__main__":
-   # guesser()
-    correct=0
-    for i in range(100):
-        if guesser():
-            correct+=1
-    print(correct/100)
+    guesser()
+    # correct=0
+    # for i in range(100):
+    #     if guesser():
+    #         correct+=1
+    # print(correct/100)
 
