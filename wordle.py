@@ -45,6 +45,8 @@ def match(word, pattern, wrong_pos,notatall):
         if any(word[pos] == c for (c, pos) in wrong_pos):
             return False
 
+        if all(word[pos] == c for (c, pos) in wrong_pos):
+            return False
 
 
     if any(c in word for c in notatall):
@@ -92,6 +94,9 @@ def guesser():
             words=get_random_word.get_random()
         word_guess=words
         print(pattern)
+        print(notattall)
+        print(wrong_pos)
+
 
 
 if __name__ == "__main__":
