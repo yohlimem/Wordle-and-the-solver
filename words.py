@@ -94,16 +94,18 @@ def get_word_score(word, average_letter_position):
 
     letter_count = {k: (v / len(letter_count.items())) for k, v in letter_count.items()}
 
-    # print(word_count)
-    
+    # print(letter_count)
+
     # find distance from the average position
 
-    score += sum([v / get_letter_percentage(k) for k, v in letter_count.items()])
+    score += sum([v * (get_letter_percentage(k) / 10.0) for k, v in letter_count.items()])
+    # print(f"score after letter count: {score}")
     for k, v in letter_positions.items():
         average_position = average_letter_position[k]
         for pos in v:
-            score *= abs(pos - average_position)
-    score = score ** 0.5
+            # if abs(pos - average_position) > 0.000001:
+            score -= abs(pos - average_position) / 5.0 * score
+                
     return score
 
 
@@ -188,7 +190,7 @@ def best_words(word_list, average_letter_position):
         if score < best_score:
             best_score = score
             best_words = [word]
-            print(f"New best word: {word} with score {score}")
+            # print(f"New best word: {word} with score {score}")
         elif abs(score - best_score) < 0.001:
             best_words.append(word)
 
@@ -198,5 +200,6 @@ def best_words(word_list, average_letter_position):
 average_letter_position = get_most_common_position()
 
 # if __name__ == "__main__":
+#     print(get_word_score("דשנים", average_letter_position))
 #     print(get_most_common_position())
 #     print(best_words(average_letter_position))
