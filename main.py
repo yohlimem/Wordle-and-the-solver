@@ -10,8 +10,4 @@ def get_random_word():
     words = contents.split()
 
     return random.choice(words)
-
-
-# random_word = get_random_word(file_path)
-# print(random_word)
     
