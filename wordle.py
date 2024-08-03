@@ -1,10 +1,12 @@
 import contents
 import get_random_word
 from get_random_word import get_random
+from words import average_letter_position, best_words
 import re
+from random import choice
 
 word = get_random_word.get_random()
-print(word)
+# print(word)
 i = 0
 
 
@@ -12,12 +14,13 @@ def game_loop(word_guess):
     global i
 
     while i < 6:
+        answer = []
         word_try = word_guess
+
         if len(word_try) != 5 or word_try not in contents.contents:
             print("please enter a real 5 letter word")
             continue
         char_list = [*word_try]
-        answer = []
         for n in range(5):
             # if letter is correct make green
             if [*word][n] == char_list[n]:
@@ -34,7 +37,7 @@ def game_loop(word_guess):
             return answer
 
         i += 1
-    return answer
+        return answer
 
 
 def match(word, green_letters, yellow_letters, wrong_letters):
@@ -74,7 +77,9 @@ def list_matches(pattern, all_words, yellow_letters, wrong_letters):
     for word in all_words:
         if match(word, pattern, yellow_letters, wrong_letters):
             matches.append(word)
-            return matches[0]
+    print(f"Found {len(matches)} matches")
+    print(best_words(matches, average_letter_position))
+    return best_words(matches, average_letter_position)[0][0]
 
 
 def guesser():
@@ -85,12 +90,13 @@ def guesser():
     for i in range(5):
         green_letter = []
 
-        print(word_guess)
+        # print(word_guess)
         guess_results = game_loop(word_guess)
-        print(guess_results)
+        # print("guess resulat:", guess_results)
 
         dictionary = contents.words
-        if guess_results == None:
+        if guess_results is None:
+            print("lose")
             break
         for n in range(5):
             if guess_results[n] == 1:
@@ -103,16 +109,14 @@ def guesser():
         if len(green_letter) > 0 or len(yellow_letters) > 0 or len(wrong_letters) > 0:
             words = list_matches(green_letter, dictionary, yellow_letters, wrong_letters)
         else:
-            print("random")
             words = get_random_word.get_random()
-        if words == None:
-            print("random")
+        if words is None:
             words = get_random_word.get_random()
         # next word is cool
         word_guess = words
-        print(green_letter)
-        print(wrong_letters)
-        print(yellow_letters)
+        # print(green_letter)
+        # print(wrong_letters)
+        # print(yellow_letters)
 
 
 if __name__ == "__main__":

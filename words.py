@@ -178,15 +178,13 @@ def get_most_common_position():
     return average_letter_position
 
 
-def best_words(letter_list, average_letter_position):
+def best_words(word_list, average_letter_position):
     best_score = 100000
     # best_word = ''
     best_words = []
-    words = contents.split()
+    words = word_list
     for word in words:
         score = get_word_score(word, average_letter_position)
-        if score == 0:
-            continue
         if score < best_score:
             best_score = score
             best_words = [word]
@@ -199,6 +197,6 @@ def best_words(letter_list, average_letter_position):
 
 average_letter_position = get_most_common_position()
 
-if __name__ == "__main__":
-    print(get_most_common_position())
-    print(best_words(average_letter_position))
+# if __name__ == "__main__":
+#     print(get_most_common_position())
+#     print(best_words(average_letter_position))
