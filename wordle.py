@@ -1,9 +1,10 @@
+import contents
 import get_random_word
 from get_random_word import get_random
 import re
 
 word = get_random_word.get_random()
-#print(word)
+print(word)
 i = 0
 def guess(word_guess):
     global i
@@ -47,30 +48,29 @@ def list_matches(pattern, dictionary):
 
 def guesser():
     word_guess = get_random()
-    for i in range(6):
+
+    for i in range(5):
 
 
-
+        print(word_guess)
         guessans = (guess(word_guess))
+        print(guessans)
         pattern = []
-        dictionary = get_random_word.contents
+        dictionary = contents.words
 
         for n in range(5):
             if(guessans[n]==1):
                 pattern.append(([*word_guess][n],n))
 
-        words =list_matches(pattern, dictionary)[0]
+        if(pattern!=[]):
+            words =list_matches(pattern, dictionary)
+        else:
+            words=get_random_word.get_random()
 
         word_guess=words
 
 
 
-#if __name__ == "__main__":
-   # guesser()
-
-
-pattern = [("א", 0)]
-dictionary =get_random_word.contents
-
-list_matches(pattern, dictionary)
+if __name__ == "__main__":
+   guesser()
 
