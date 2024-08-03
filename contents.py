@@ -1,7 +1,7 @@
 file_path = "./five-letters/five_letter_words.txt"
 contents = ""
-words =[]
+words = []
 with open(file_path, "r", encoding="utf-8") as file:
     contents = file.read()
-    words =contents.split()
+    words = contents.split()
 
