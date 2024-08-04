@@ -108,7 +108,7 @@ def list_matches(
     # )
 
     if (
-        ((guess_results.count(1) >= 3 and guess_results.count(-1) <= 2) and turn < 4) or (common and turn < 4)
+        ((guess_results.count(1) >= 3 and guess_results.count(-1) <= 2) and turn < 4) or (common and turn < 4) and len(yellow_letters) == 0
     ):
         print("run")
 
