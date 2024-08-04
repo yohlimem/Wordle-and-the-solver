@@ -14,7 +14,7 @@ def start_game():
     i = 0
     word = get_random_word.get_random()
     #word="קלזיו"
-    print(word)
+    #print(word)
 
 
 def game_loop(word_guess):
@@ -119,11 +119,16 @@ def guesser():
     start_game()
     yellow_letters = []
     wrong_letters = []
-    word_guess = "והרלי"
+    word_guess = "ליורה"
 
     for i in range(5):
         green_letter = []
-        guess_results = game_loop(word_guess)
+        print(word_guess)
+        #guess_results = game_loop(word_guess)
+        guess_results=[]
+        for l in range(5):
+            guess_result =int(input("enter result"))
+            guess_results.append(guess_result)
         if i == 4:
             print("guessed word: ", word_guess)
             print(guess_results)
