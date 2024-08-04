@@ -101,7 +101,7 @@ def guesser():
     word_guess = "אחיהן"
 
     for i in range(5):
-        
+
         # print("guessed word: ", word_guess)
         green_letter = []
         guess_results = game_loop(word_guess)
@@ -150,4 +150,3 @@ if __name__ == "__main__":
     #     print("=========================================")
     # print(correct / 100)
     # guesser()
-    
