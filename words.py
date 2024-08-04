@@ -1,6 +1,8 @@
 from get_random_word import get_random
 from contents import words
 
+common_letters = ['ה', "י", "ו", "ר", "ל"]
+
 # https://www.sttmedia.com/characterfrequency-hebrew
 def get_letter_percentage(letter):
     match letter:

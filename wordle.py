@@ -86,6 +86,11 @@ def get_word_without_used_words(words, letters_to_avoid):
     return True
 
 
+def count_amount_from_list_to_list(list1, list2):
+    common_letters = [letter for letter in list1 if letter in list2]
+    return len(common_letters)
+
+
 def list_matches(
     correct_letters, all_words, yellow_letters, wrong_letters, guess_results, turn
 ):
@@ -94,7 +99,17 @@ def list_matches(
     #     if match(word, pattern, yellow_letters, wrong_letters):
     #         matches.append(word)
     print(guess_results)
-    if guess_results.count(1) >= 3 and guess_results.count(-1) <= 2 and turn < 4:
+    common = (
+        any(tuple[0] in words.common_letters for tuple in correct_letters)
+        and count_amount_from_list_to_list(words.common_letters, [tuple[0] for tuple in correct_letters]) >= 2
+    )
+    # print(
+    #     f"{[tuple[0] for tuple in correct_letters]} in {words.common_letters}: {count_amount_from_list_to_list(words.common_letters, [tuple[0] for tuple in correct_letters]) >= 2}"
+    # )
+
+    if (
+        ((guess_results.count(1) >= 3 and guess_results.count(-1) <= 2) and turn < 4) or (common and turn < 4)
+    ):
         print("run")
 
         letters_to_avoid = []
@@ -141,7 +156,6 @@ def guesser():
         # print("guessed word: ", word_guess)
         print(word_guess)
         guess_results = game_loop(word_guess)
-        
 
         # guess_results = []
         # for l in range(5):
@@ -193,8 +207,8 @@ def guesser():
 if __name__ == "__main__":
     # guesser()
     correct = 0
-    for i in range(1000):
+    for i in range(100):
         if guesser():
             correct += 1
         print("=========================================")
-    print(correct / 1000)
+    print(correct / 100)
