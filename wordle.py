@@ -125,10 +125,12 @@ def guesser():
         green_letter = []
         print(word_guess)
         #guess_results = game_loop(word_guess)
+
         guess_results=[]
         for l in range(5):
             guess_result =int(input("enter result"))
             guess_results.append(guess_result)
+
         if i == 4:
             print("guessed word: ", word_guess)
             print(guess_results)
