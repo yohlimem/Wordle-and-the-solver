@@ -93,19 +93,22 @@ def get_word_score(word, average_letter_position, guest_result=None):
 
     for k, v in letter_count.items():
         letter_percentage = get_letter_percentage(k)
-        score += letter_percentage / 100 / v
+        score += letter_percentage
+        
+        score -= v
 
-    # print(f"score after letter count: {score}")
     for k, v in letter_positions.items():
-        average_position = (average_letter_position[k])
+        average_position = average_letter_position[k]
         letter_percentage = get_letter_percentage(k)
 
         for pos in v:
-            #     if guest_result is not None:
-            #         if guest_result[pos] != 1:
-            #             score -= abs(pos - average_position)
-            #     else:
-            score -= abs(pos - average_position) / 5 / 10.0
+            if guest_result is not None:
+                if guest_result[pos] != 1:
+                    score /= abs(pos - average_position) / 4 + 1
+                else:
+                    score += 1 
+            else:
+                score /= abs(pos - average_position) / 4 + 1
 
     return score
 
@@ -176,18 +179,18 @@ def get_most_common_position():
     }
     for letter, data in letter_position.items():
         data["position"] /= data["appeared"]
-        average_letter_position[letter] = data["position"]
+        average_letter_position[letter] = (data["position"])
     return average_letter_position
 
 
 def best_words(word_list, average_letter_position):
-    best_score = 0
+    best_score = -1000000
     # best_word = ''
     best_words = []
     words = word_list
     for word in words:
         score = get_word_score(word, average_letter_position)
-        # print(f"Word: {word} with score {score}")
+            
         if score > best_score:
             best_score = score
             best_words = [word]
@@ -202,7 +205,7 @@ def best_words(word_list, average_letter_position):
 average_letter_position = get_most_common_position()
 
 if __name__ == "__main__":
-    # print(get_word_score("ויויו", average_letter_position))
-    # print(get_most_common_position())
+    print(get_word_score("ויויו", average_letter_position))
+# print(get_most_common_position())
     print(best_words(words, average_letter_position))
-    print(average_letter_position)
+# print(average_letter_position)
