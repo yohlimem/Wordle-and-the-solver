@@ -96,7 +96,6 @@ def get_word_score(word, average_letter_position, guest_result=None):
         score += letter_percentage / 100 / v
 
     # print(f"score after letter count: {score}")
-    score_before_change = score
     for k, v in letter_positions.items():
         average_position = (average_letter_position[k])
         letter_percentage = get_letter_percentage(k)
@@ -106,7 +105,7 @@ def get_word_score(word, average_letter_position, guest_result=None):
             #         if guest_result[pos] != 1:
             #             score -= abs(pos - average_position)
             #     else:
-            score -= abs(pos - average_position) * (letter_percentage / 100)
+            score -= abs(pos - average_position) / 5 / 10.0
 
     return score
 
@@ -206,4 +205,4 @@ if __name__ == "__main__":
     # print(get_word_score("ויויו", average_letter_position))
     # print(get_most_common_position())
     print(best_words(words, average_letter_position))
-    # print(average_letter_position)
+    print(average_letter_position)
