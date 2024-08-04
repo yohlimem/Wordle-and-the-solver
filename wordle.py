@@ -1,8 +1,8 @@
+from copy import deepcopy
 import contents
 import get_random_word
 import words
 from get_random_word import get_random
-import re
 
 word = ""
 i = 0
@@ -12,7 +12,7 @@ def start_game():
     global i
     global word
     i = 0
-    word = get_random_word.get_random()
+    word = get_random()
     print(word)
 
 
@@ -38,7 +38,7 @@ def game_loop(word_guess):
                 answer.append(-1)
         # if all letters are correct
         if answer == [1, 1, 1, 1, 1]:
-            print("guessed result: ", word_guess)
+            # print("guessed result: ", word_guess)
             print("you won!")
             return answer
 
@@ -83,9 +83,13 @@ def list_matches(correct_letters, all_words, yellow_letters, wrong_letters):
     # for word in all_words:
     #     if match(word, pattern, yellow_letters, wrong_letters):
     #         matches.append(word)
-    
-    matches = filter(lambda word: match(word, correct_letters, yellow_letters, wrong_letters), all_words)
 
+    matches = filter(
+        lambda word: match(word, correct_letters, yellow_letters, wrong_letters),
+        all_words,
+    )
+
+    print("matches: ", list(deepcopy(matches)))
     best_words, best_score = words.best_words(matches, words.average_letter_position)
     return best_words[0]
 
@@ -97,11 +101,13 @@ def guesser():
     word_guess = "אחיהן"
 
     for i in range(5):
+        
+        # print("guessed word: ", word_guess)
         green_letter = []
         guess_results = game_loop(word_guess)
-        if i == 4:
-            print("guessed word: ", word_guess)
-            print(guess_results)
+        print(guess_results)
+        print("guessed word: ", word_guess)
+        # if i == 4:
 
         dictionary = contents.words
         if guess_results == [1, 1, 1, 1, 1]:
@@ -136,10 +142,12 @@ def guesser():
 
 
 if __name__ == "__main__":
+    guesser()
+    # correct = 0
+    # for i in range(100):
+    #     if guesser():
+    #         correct += 1
+    #     print("=========================================")
+    # print(correct / 100)
     # guesser()
-    correct = 0
-    for i in range(100):
-        if guesser():
-            correct += 1
-        print("=========================================")
-    print(correct / 100)
+    
