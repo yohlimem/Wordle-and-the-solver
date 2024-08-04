@@ -97,19 +97,6 @@ def get_word_score(word, average_letter_position, guest_result=None):
         
         score -= v
 
-    for k, v in letter_positions.items():
-        average_position = average_letter_position[k]
-        letter_percentage = get_letter_percentage(k)
-
-        for pos in v:
-            if guest_result is not None:
-                if guest_result[pos] != 1:
-                    score /= abs(pos - average_position) / 4 + 1
-                else:
-                    score += 1 
-            else:
-                score /= abs(pos - average_position) / 4 + 1
-
     return score
 
 
